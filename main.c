@@ -275,7 +275,7 @@ void *threadFunc()
         mvaddch(x, (y)*4 - 2, (char)(48 + matrix[x - 1][y - 1]));
         move(curr_x, curr_y);
         refresh();
-        matrix[x - 1][y - 1] =  matrix[g_x][g_y];
+        matrix[x - 1][y - 1] = -matrix[g_x][g_y];
         hit = 1;
         play_again = 1;
         g_x = x - 1;
