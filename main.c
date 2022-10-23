@@ -27,7 +27,7 @@ int chechk_win_cond2();
 int PC_gen_pos();
 int input_enemy_choois(int id, int vh, int x, int y);
 void *threadFunc();
-
+void init_home_scr();
 int curr_x = 13, curr_y = 0;
 int bord_x = 1, bord_y = 2;
 int ch;
@@ -72,6 +72,12 @@ int main()
   noecho();
 
   pthread_create(&thread_id, NULL, threadFunc, NULL);
+  while(ch!='\n'&&ch!=27){
+    init_home_scr();
+    ch=getch();
+  }
+  clear();
+  if(ch==27)return 0;
 
   repaintBK(); // paint the bord with squares
   PC_gen_pos();
@@ -439,9 +445,10 @@ int check_valid_ship_name(char *ship_name, int *shipId);
 int check_h_v(char *hv, int *in);
 int check_coo_input(int x, int y);
 void input_player_choois(int id, int vh, int x, int y);
+int ships_on_vords=0;
 int proccess_info(char **playerInfo)
 {
-
+    if(strcmp(*playerInfo,"end")==0 && ships_on_vords>=2)return 1;
   char separator[2] = "-";
   char *token;
   int vh;
@@ -473,7 +480,8 @@ int proccess_info(char **playerInfo)
     return 0; // if x[1-7] and y[1-7]
 
   input_player_choois(shipID, vh, en_x, en_y);
-  if (ship1 == 0)
+  ships_on_vords+=1;
+  if ((ship1&ship3&ship4&ship5)==0)
     return 1;
   return 0;
 }
@@ -714,6 +722,21 @@ void repaintBK()
 {
   printw(matrix_map);
 }
+
+char home_scr []="                                     |\\/\n                                     ---\n                                     / | [\n                              !      | |||\n                            _/|     _/|-++'\n                        +  +--|    |--|--|_ |-\n                     { /|__|  |/\\__|  |--- |||__/\n                    +---------------___[}-_===_.'____                   /\\\n                ____`-' ||___-{]_| _[}-  |     |_[___\\==--\n            \\/   _\n __..._____--==/___]_|__|_____________________________[___\\==--____,------' .7\n|                                                                     BB-61/\n \\_________________________________________________________________________|\n";
+
+void init_home_scr(){
+  char *mesg = "***[WELCOME TO BATTLESHIPS]***\n\n";
+  attron(A_BOLD);
+  mvprintw(0,(col-strlen(mesg)+21)/2,"%s",mesg); 
+  attroff(A_BOLD);
+  printw(home_scr);
+  attron(A_BOLD);
+  printw("\n\n\n\t\t\t>[PRESS ENTER TO START]<");
+  printw("\n\t\t\t >[PRESS ESC TO EXIT]<");
+  attroff(A_BOLD);
+}
+
 
 int PC_gen_pos()
 {
