@@ -270,12 +270,12 @@ void *threadFunc()
       
 
 
-      if (matrix[x - 1][y - 1] != 0)
+      if (matrix[x - 1][y - 1] >0)
       {
         mvaddch(x, (y)*4 - 2, (char)(48 + matrix[x - 1][y - 1]));
         move(curr_x, curr_y);
         refresh();
-        matrix[x - 1][y - 1] = -1;
+        matrix[x - 1][y - 1] =  matrix[g_x][g_y];
         hit = 1;
         play_again = 1;
         g_x = x - 1;
@@ -328,7 +328,7 @@ void *threadFunc()
     else{
       playerTurn = 0;
       mvprintw(14,0,"\n\n");
-      mvprintw(13,0,"[ITS YOUR TURN CAPTAIN..]");
+      mvprintw(14,0,"[ITS YOUR TURN CAPTAIN..]");
       move(curr_x,curr_y);
       refresh();
       }
