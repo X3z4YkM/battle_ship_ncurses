@@ -298,7 +298,7 @@ void *threadFunc()
         g_y -= 1;
       else if (matrix[g_x][g_y + 1] > 0)
         g_y += 1;
-      if (hit && matrix[g_x][g_y] >= 0)
+      if (hit && matrix[g_x][g_y] <= 0)
       {
         mvaddch(g_x + 1, (g_y + 1) * 4 - 2, 'O');
         sleep(1);
@@ -307,13 +307,13 @@ void *threadFunc()
         move(curr_x, curr_y);
         refresh();
       }
-      if (matrix[g_x][g_y] != 0)
+      if (matrix[g_x][g_y] > 0)
       {
 
         mvaddch(g_x + 1, (g_y + 1) * 4 - 2, (char)(48 + matrix[g_x][g_y]));
         move(curr_x, curr_y);
         refresh();
-        matrix[g_x][g_y] = -1;
+        matrix[g_x][g_y] = matrix[g_x][g_y];
         play_again = 1;
       }
       else
@@ -327,7 +327,7 @@ void *threadFunc()
       playerTurn = 1;
     else{
       playerTurn = 0;
-      mvprintw(13,0,"\n");
+      mvprintw(14,0,"\n\n");
       mvprintw(13,0,"[ITS YOUR TURN CAPTAIN..]");
       move(curr_x,curr_y);
       refresh();
