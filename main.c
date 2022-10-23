@@ -77,8 +77,10 @@ int main()
     ch=getch();
   }
   clear();
-  if(ch==27)return 0;
-
+  if(ch==27){
+    endwin();
+    return 0;
+  }
   repaintBK(); // paint the bord with squares
   PC_gen_pos();
   printw("\n\n");
@@ -231,9 +233,7 @@ int main()
 
   return 0;
 
-  while (1)
-  {
-  }
+  
 }
 
 void *threadFunc()
@@ -734,6 +734,7 @@ void init_home_scr(){
   attron(A_BOLD);
   printw("\n\n\n\t\t\t>[PRESS ENTER TO START]<");
   printw("\n\t\t\t >[PRESS ESC TO EXIT]<");
+  printw("\n\t\t\t >[PRESS m TO MENU]<");
   attroff(A_BOLD);
 }
 
